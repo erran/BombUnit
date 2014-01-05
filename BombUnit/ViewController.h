@@ -56,7 +56,8 @@
 - (void)konamiSkip;
 - (void)alertGameOver;
 - (void)alertStart;
-//Game Center Junk:
+
+// Game Center Junk:
 @property (nonatomic, retain) HighScoreManager *highscoreManager;
 @property (nonatomic, assign) int64_t currentScore;
 @property (nonatomic, retain) NSString* currentLeaderBoard;

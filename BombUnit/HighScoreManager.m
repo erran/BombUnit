@@ -121,11 +121,11 @@ scoreReporter.value = score;
 
 - (void) submitAchievement: (NSString*) identifier percentComplete: (double) percentComplete
 {
-//GameCenter check for duplicate achievements when the achievement is submitted, but if you only want to report 
-// new achievements to the user, then you need to check if it's been earned 
-// before you submit.  Otherwise you'll end up with a race condition between loadAchievementsWithCompletionHandler
-// and reportAchievementWithCompletionHandler.  To avoid this, we fetch the current achievement list once,
-// then cache it and keep it updated with any new achievements.
+// GameCenter check for duplicate achievements when the achievement is submitted, but if you only want to report 
+//  new achievements to the user, then you need to check if it's been earned 
+//  before you submit.  Otherwise you'll end up with a race condition between loadAchievementsWithCompletionHandler
+//  and reportAchievementWithCompletionHandler.  To avoid this, we fetch the current achievement list once,
+//  then cache it and keep it updated with any new achievements.
 if(self.earnedAchievementCache == NULL)
 {
     [GKAchievement loadAchievementsWithCompletionHandler: ^(NSArray *scores, NSError *error)
@@ -142,21 +142,21 @@ if(self.earnedAchievementCache == NULL)
          }
          else
          {
-             //Something broke loading the achievement list.  Error out, and we'll try again the next time achievements submit.
+             // Something broke loading the achievement list.  Error out, and we'll try again the next time achievements submit.
              [self callDelegateOnMainThread: @selector(achievementSubmitted:error:) withArg: NULL error: error];
          }
-         
+
      }];
 }
 else
 {
-    //Search the list for the ID we're using...
+    // Search the list for the ID we're using.
     GKAchievement* achievement= [self.earnedAchievementCache objectForKey: identifier];
     if(achievement != NULL)
     {
         if((achievement.percentComplete >= 100.0) || (achievement.percentComplete >= percentComplete))
         {
-            //Achievement has already been earned so we're done.
+            // Achievement has already been earned so we're done.
             achievement= NULL;
         }
         achievement.percentComplete= percentComplete;
@@ -165,12 +165,12 @@ else
     {
         achievement= [[[GKAchievement alloc] initWithIdentifier: identifier] autorelease];
         achievement.percentComplete= percentComplete;
-        //Add achievement to achievement cache...
+        // Add achievement to achievement cache.
         [self.earnedAchievementCache setObject: achievement forKey: achievement.identifier];
     }
     if(achievement!= NULL)
     {
-        //Submit the Achievement...
+        // Submit the Achievement.
         [achievement reportAchievementWithCompletionHandler: ^(NSError *error)
          {
              [self callDelegateOnMainThread: @selector(achievementSubmitted:error:) withArg: achievement error: error];

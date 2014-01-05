@@ -31,12 +31,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    
+    // Do any additional setup after loading the view.
+
     highscoreManager = [[[HighScoreManager alloc] init] autorelease];
-    [highscoreManager setDelegate:self];
+    HighScoreManager.delegate = self;
     [highscoreManager authenticateLocalUser];
-    
+
     upSwipes = 0;
     downSwipes = 0;
     leftSwipes = 0;
@@ -130,7 +130,7 @@
     konamiInt++;
     gamepad.hidden = YES;
     b.hidden = YES;
-    a.hidden = YES;    
+    a.hidden = YES;
     UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Greetings Ninja" message:@"Would you like to skip to Level 12?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] autorelease];
     [alert show];
 }
@@ -148,7 +148,7 @@
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//Game Center Konami Code Achievement:
+    // Game Center Konami Code Achievement:
     if (buttonIndex == 1){
         NSString* identifier = NULL;
         double percentComplete = 0;
@@ -162,7 +162,7 @@
             [highscoreManager authenticateLocalUser];
             [highscoreManager submitAchievement: identifier percentComplete: percentComplete];
         }
-    
+
         ViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"gameplay"];
         [viewController konamiSkip];
         [self presentModalViewController:viewController animated:YES];

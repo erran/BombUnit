@@ -33,8 +33,6 @@
     [song stop];
     ViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"help"];
     [self presentModalViewController:viewController animated:YES];
-    
-
 }
 -(void)songPlay{
     NSError *error = nil;
