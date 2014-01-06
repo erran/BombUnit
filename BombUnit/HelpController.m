@@ -34,7 +34,7 @@
     // Do any additional setup after loading the view.
 
     highscoreManager = [[[HighScoreManager alloc] init] autorelease];
-    HighScoreManager.delegate = self;
+    highscoreManager.delegate = self;
     [highscoreManager authenticateLocalUser];
 
     upSwipes = 0;
